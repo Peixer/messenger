@@ -127,7 +127,7 @@ class MessageThread extends Model implements MessageThreadInterface
 
         // If message date is greater than the
         // last_read, the message is unread.
-        return $this->messages->filter(function ($msg, $key) use ($last_read,$user_id) {
+        return $this->messages->filter(function ($msg) use ($last_read,$user_id) {
             // Exclude messages that were sent
             // by this user.
             if ($user_id == $msg->sender_id) {
