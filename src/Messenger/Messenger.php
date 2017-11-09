@@ -109,6 +109,7 @@ class Messenger
         $thread = $this->getThread();
         $message = $this->message;
         $to = $this->to;
+        $message_id = $this->message_id;
 
         $message = $thread->messages()->create([
             'body' => $message,
@@ -137,15 +138,11 @@ class Messenger
         // let's use it!
         if ($this->to instanceof MessageThreadInterface) {
             $thread = $this->to;
-        }
-
-        // If recipient is a user, let's find a
+        } // If recipient is a user, let's find a
         // thread between him/her and the sender.
         elseif ($this->to instanceof MessageableInterface) {
             $thread = App::make(MessageThreadInterface::class)->between($this->from->id, $this->to->id)->first();
-        }
-
-        // If recipient is an array, someone is trying
+        } // If recipient is an array, someone is trying
         // to send the message to multiple users...
         // Let's try to find a thread between them.
         elseif (is_array($this->to)) {
@@ -170,7 +167,7 @@ class Messenger
         $from = $this->from;
         $to = $this->to;
 
-        return DB::transaction(function () use ($from,$to) {
+        return DB::transaction(function () use ($from, $to) {
             $thread = App::make(MessageThreadInterface::class);
             $thread->id = null;
             $thread->save();
