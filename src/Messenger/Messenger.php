@@ -34,6 +34,8 @@ class Messenger
      */
     protected $message;
 
+    protected $message_id;
+
     /**
      * Set Message.
      *
@@ -44,6 +46,14 @@ class Messenger
     public function message($message)
     {
         $this->message = $message;
+
+        return $this;
+    }
+
+    
+    public function message_id($message_id)
+    {
+        $this->message_id = $message_id;
 
         return $this;
     }
@@ -103,6 +113,7 @@ class Messenger
         $message = $thread->messages()->create([
             'body' => $message,
             'sender_id' => $from->id,
+            'message_id' => $message_id
         ]);
 
         if ($message->id) {
